@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Train Schedule</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"></a>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+
+</head>
+
+<body>
+
+
+    <div id='titleJumbotron'>
+        <div class="jumbotron">
+            <h1>Anytime is Train time</h1>
+        </div>
+    </div>
+
+
+    <div id='trainScheduleContainer'>
+        <!--Bootstrap table-- -------------------->
+        <table class="table">
+            <div id='trainScheduleHeader'>
+                <h4>Train Schedule</h4>
+            </div>
+            <thead class="thead-dark">
+
+                <tr>
+                    <th scope="col">Train Name</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Frequency (min)</th>
+                    <th scope="col">Next Arrival</th>
+                    <th scope="col">Minutes Away</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>@mdo</td>
+
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                    <td>@mdo</td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <!--End of bootstrap table-- -------------------->
+    </div>
+    <br>
+    <br>
+
+
+
+    <!------------Bootstrap Forms--------------------------------------->
+    <div id='AddTrainContainer'>
+        <form>
+            <div id='AddTrainHeader'>
+                <h4>Add Train</h4>
+            </div>
+
+            <div class="form-group">
+                <label for="TrainName">Train Name</label>
+                <input type="text" class="form-control" id="InputTrain">
+            </div>
+            <div class="form-group">
+                <label for="DestinationName">Destination</label>
+                <input type="text" class="form-control" id="InputDestination">
+            </div>
+            <div class="form-group">
+                <label for="FirstTrainTime">First Train Time (HH:mm - military time)</label>
+                <input type="text" class="form-control" id="InputFirstTrainTime">
+            </div>
+            <div class="form-group">
+                <label for="Frequency">Frequency (min)</label>
+                <input type="text" class="form-control" id="InputFrequency">
+            </div>
+
+
+            <button type="submit" id="submit-form" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <br>
+    <br>
+
+    <!------------End of bootstrap Forms--------------------------------------->
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="assets/javascript/script.js"></script>
+</body>
+
+</html>
