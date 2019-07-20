@@ -3,6 +3,8 @@
 
 
 
+
+
 // SETUP VARIABLES 
 //=============================================
 
@@ -21,44 +23,45 @@ var config = {
 
 firebase.initializeApp(config);
 //Here's a list of our ID names in the HTML
-//"#employee-name"
-//"#role"
-//"#start-date"
-//"#monthly-rate"
+//"#InputTrain"
+//"#InputDestination"
+//"#InputFirstTrainTime"
+//"#InputTrainFrequency"
 //"#submit-form"  - name of the submit button
 var database = firebase.database();
 
-var name = "";
-var role = "";
-var startDate = "";
-var monthsWorked = 0;
-var monthlyRate = 0;
-var totalBilled = 0;
+var trainName = "";
+var desinationName = "";
+//convert somehow into time
+var firstTrainTime = "";
+var trainFrequency = 0;
+
 
 $("#submit-form").on("click", function (event) {
 
     event.preventDefault();
-    name = $("#employee-name").val().trim();
-    role = $("#role").val().trim();
-    startDate = $("#start-date").val().trim();
-    monthlyRate = parseFloat($("#monthly-rate").val().trim());
-    //totalBilled = $("#total-billed").val().trim();
+
+    trainName = $("#InputTrain").val().trim();
+    desinationName = $("#InputDestination").val().trim();
+    firstTrainTime = $("#InputFirstTrainTime").val().trim();
+    trainFrequency = $("#InputTrainFrequency").val().trim();
+
     //$(".table").empty();
     database.ref().push({
-        name: name,
-        role: role,
-        startDate: startDate,
-        monthlyRate: monthlyRate
+        trainName: trainName,
+        desinationName: desinationName,
+        firstTrainTime: firstTrainTime,
+        trainFrequency: trainFrequency
     });
 
 })
 database.ref().on("child_added", function (snapshot) {
     var sv = snapshot.val();
     console.log(snapshot);
-    console.log(sv.name);
-    console.log(sv.role);
-    console.log(sv.startDate);
-    console.log(sv.monthlyRate);
+    console.log(sv.trainName);
+    console.log(sv.desinationName);
+    console.log(sv.firstTrainTime);
+    console.log(sv.trainFrequency);
 
     console.log(snapshot.key + " - name is " + snapshot.val().name);
     createRow(snapshot.val());
@@ -71,26 +74,27 @@ database.ref().on("child_added", function (snapshot) {
 
 
 function createRow(data) {
-    var startDataFormat = "YYYY/MM/DD";
-    var convertedDate = moment(data.startDate, startDataFormat);
-    console.log("start date: " + convertedDate);
+    var firstTrainFormat = "HH:mm";
+    var convertedNextArrival = moment(data.trainFrequency, firstTrainFormat);
+    console.log("converted: " + convertedNextArrival);
 
     //var readablestartDate=data.startDate
     var monthsWorked = -convertedDate.diff(moment(), "months");
     console.log(monthsWorked);
     var monthlyRate = data.monthlyRate;
     var totalBilled = monthsWorked * monthlyRate;
-    var tbl = $('.table');
 
     var row = $('<tr>');
-    row.append($('<td>').text(data.name));
-    row.append($('<td>').text(data.role));
-    row.append($('<td>').text(data.startDate));
+    row.append($('<td>').text(data.trainName));
+    row.append($('<td>').text(data.desinationName));
+    row.append($('<td>').text(data.trainFrequency));
+    row.append($('<td>').text(firstTrainTime + trainFrequency));
+    //Next arrival (nextArrival, firstTrainTime + trainFrequency)
     row.append($('<td>').text(monthsWorked));
+    //minutes away to next arrival (minutesAway)
     row.append($('<td>').text(data.monthlyRate));
-    row.append($('<td>').text(totalBilled));
 
-    tbl.append(row);
+    $('#newTrainEntry').append(row);
 
 }
 

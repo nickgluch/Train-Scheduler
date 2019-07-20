@@ -7,9 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Train Schedule</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"></a>
+    <!----integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">--->
+
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
-
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
 </head>
 
 <body>
@@ -39,7 +42,7 @@
 
                 </tr>
             </thead>
-            <tbody>
+            <tbody id='newTrainEntry'>
                 <tr>
                     <th scope="row">1</th>
                     <td>Mark</td>
@@ -95,7 +98,7 @@
             </div>
             <div class="form-group">
                 <label for="Frequency">Frequency (min)</label>
-                <input type="text" class="form-control" id="InputFrequency">
+                <input type="text" class="form-control" id="InputTrainFrequency">
             </div>
 
 
@@ -110,6 +113,11 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!---integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">-->
+
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
 
     <script src="assets/javascript/script.js"></script>
 </body>
