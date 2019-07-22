@@ -46,7 +46,8 @@ $("#submit-form").on("click", function (event) {
 
     trainName = $("#InputTrain").val().trim();
     desinationName = $("#InputDestination").val().trim();
-    firstTrainTime = $("#InputFirstTrainTime").val().trim();
+    //firstTrainTime = $("#InputFirstTrainTime").val().trim();
+    firstTrainTime = moment($("#InputFirstTrainTime").val().trim(), "HH:mm").subtract(10, "years").format("X");
 
     trainFrequency = $("#InputTrainFrequency").val().trim();
 
@@ -59,6 +60,7 @@ $("#submit-form").on("click", function (event) {
     });
 
 
+    $("#currentTime").append(moment().format("hh:mm A"));
 
 
 
@@ -87,21 +89,33 @@ function createRow(data) {
 
 
     // Minute Until Train
-    var firstTimeConverted = moment(firstTrainTime, "HH:mm").subtract(1, "years");
-    console.log("firstTimeConverted: " + firstTimeConverted);
+    //var firstTimeConverted = moment(firstTrainTime, "HH:mm").subtract(1, "years");
+    console.log("firstTimeConverted: " + firstTrainTime);
 
 
     // var firstTimeConverted = moment(firstTrainTime, "HH:mm")
 
-    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    var tRemainder = diffTime % trainFrequency;
-    var tMinutesTillTrain = trainFrequency - tRemainder;
+    //var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    //var tRemainder = diffTime % trainFrequency;
+    //var tMinutesTillTrain = trainFrequency - tRemainder;
 
 
     // Next Train
-    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    //var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    //console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+
+    // Calculate the minutes until arrival using hardcore math
+    // To calculate the minutes till arrival, take the current time in unix subtract the FirstTrain time and find the modulus between the difference and the frequency  
+    var tRemainder = moment().diff(moment.unix(firstTrainTime), "minutes") % trainFrequency;
+    var tMinutes = trainFrequency - tRemainder;
+
+    // To calculate the arrival time, add the tMinutes to the currrent time
+    var nextTrain = moment().add(tMinutes, "m").format("hh:mm A");
+
+
+
 
 
 
@@ -112,7 +126,7 @@ function createRow(data) {
     row.append($('<td>').text(data.trainFrequency));
     row.append($('<td>').text(nextTrain));
 
-    row.append($('<td>').text(tMinutesTillTrain));
+    row.append($('<td>').text(tMinutes));
 
 
     $('#newTrainEntry').append(row);
