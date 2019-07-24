@@ -46,8 +46,9 @@ $("#submit-form").on("click", function (event) {
 
     trainName = $("#InputTrain").val().trim();
     desinationName = $("#InputDestination").val().trim();
-    //firstTrainTime = $("#InputFirstTrainTime").val().trim();
-    firstTrainTime = moment($("#InputFirstTrainTime").val().trim(), "HH:mm").subtract(10, "years").format("X");
+    //firstTrainTime = moment($("#InputFirstTrainTime").val().trim(), "HH:mm").subtract(10, "years").format("X");
+    var firstTimeInput = $("#InputFirstTrainTime").val().trim();
+    var firstTimeConverted = moment(firstTimeInput, "HH:mm").subtract(1, "years");
 
     trainFrequency = $("#InputTrainFrequency").val().trim();
 
@@ -62,6 +63,7 @@ $("#submit-form").on("click", function (event) {
 
     $("#currentTime").append(moment().format("hh:mm A"));
 
+    trainData.push(newTrain);
 
 
 
@@ -74,6 +76,7 @@ database.ref().on("child_added", function (snapshot) {
     console.log(sv.desinationName);
     console.log(sv.firstTrainTime);
     console.log(sv.trainFrequency);
+
 
     console.log(snapshot.key + " - name is " + snapshot.val().name);
     createRow(snapshot.val());
@@ -108,13 +111,13 @@ function createRow(data) {
 
     // Calculate the minutes until arrival using hardcore math
     // To calculate the minutes till arrival, take the current time in unix subtract the FirstTrain time and find the modulus between the difference and the frequency  
-    var tRemainder = moment().diff(moment.unix(firstTrainTime), "minutes") % trainFrequency;
-    var tMinutes = trainFrequency - tRemainder;
+    var tRemainder = moment().diff(moment.unix(data.firstTrainTime), "minutes") % data.trainFrequency;
+    var tMinutes = data.trainFrequency - tRemainder;
 
     // To calculate the arrival time, add the tMinutes to the currrent time
-    var nextTrain = moment().add(tMinutes, "m").format("hh:mm A");
+    nextTrain = moment().add(tMinutes, "m").format("hh:mm A");
 
-
+    //maybe have to push all calculation data to a  data object so it can be accessed and reused on page load
 
 
 
